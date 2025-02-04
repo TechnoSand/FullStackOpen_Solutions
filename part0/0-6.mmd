@@ -1,0 +1,18 @@
+sequenceDiagram
+    participant browser
+    participant server
+
+    Note right of browser: Browser intercepts the form submission event and prevents page reload
+    browser->>browser: e.preventDefault() (Prevents page reload)
+
+    Note right of browser: The note is added to the list and the UI is updated
+    browser->>browser: notes.push(note)
+    browser->>browser: redrawNotes() (Updates the interface)
+
+    Note right of browser: Browser sends the new note to the server via AJAX
+    browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+    activate server
+    server-->>browser: Acknowledgment response (201 Created)
+    deactivate server
+
+    Note right of browser: The new note is now stored on the server, and the UI reflects the changes
