@@ -1,20 +1,20 @@
 sequenceDiagram
     participant browser
     participant server
-    Note right of browser: Browser sends to the server the data with POST
-    browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note
+    Note right of browser: Browser fetches the HTML file from the server
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/spa
+
     activate server
-    server-->>browser: URL redirect to /exampleapp/notes
+    server-->>browser: HTML document
 
     deactivate server
-        Note right of browser: The browser reload the page causing more HTTP requests
 
     browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.css
     activate server
     server-->>browser: the css file
     deactivate server
 
-    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.js
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/spa.js
     activate server
     server-->>browser: the JavaScript file
     deactivate server
@@ -23,7 +23,8 @@ sequenceDiagram
 
     browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
     activate server
-    server-->>browser: (We can see the new note in the list)
+
+    server-->>browser: JSON data containing notes
     deactivate server
 
-    Note right of browser: The browser executes the event handles that renders the notes
+    Note right of browser: The browser fetches the JSON data and renders it to the page
